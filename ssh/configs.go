@@ -102,6 +102,10 @@ func GetConfigs(path string, servers []HostConfig) (map[string]*Session, error) 
 					}
 
 					session.Config.ClientConfig.Auth = append(session.Config.ClientConfig.Auth, ssh.PublicKeys(signer))
+				} else {
+					if _, err := os.Stat(util.ExpandPath("~/.ssh/id_rsa")); err == nil {
+						session.Config.IdentityFile = "~/.ssh/id_rsa"
+					}
 				}
 			}
 		}
